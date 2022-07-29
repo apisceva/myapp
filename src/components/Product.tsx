@@ -1,12 +1,17 @@
 import React, { useState } from "react"
 import { IProduct } from "../models"
 
+
 interface ProductProps {
 product: IProduct
 }
 
 export function Product({product}: ProductProps) {
-    const [details, set] = useState(initialState: false)
+    const [details, setDetails] = useState(false)
+
+    const btnBgClassName = details ? 'bg-yellow-400' : 'bg-blue-400'
+
+    const btnClasses = ['py-2 px-4 border', btnBgClassName ]
 
 
     return (
@@ -17,12 +22,17 @@ export function Product({product}: ProductProps) {
             <p>{product.title}</p>
             <p className="font-bold">{product.price}</p>
             <button 
-                className="py-2 px-4 border bg-yellow-400"
-                onClick={()=> setDetails(value:true)}
+                className= {btnClasses.join(' ')}
+                onClick={() => setDetails(prev => !prev)}
             >
-                Show Details
+                {details ? 'Hide Details' : 'Show Details'}
             </button>
-            {/* <p>{product.description}</p> */}
+
+            {details && <div>
+                <p>{product.description}</p>
+                <p>Rate: <span style={{fontWeight: 'bold'}}>{product.rating.rate}</span></p>
+            </div>}
+         
         </div>
     )
 }
